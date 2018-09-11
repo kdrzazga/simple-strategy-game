@@ -1,6 +1,5 @@
 package org.kd.model;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -42,11 +41,11 @@ public class BoardField {
         if (this.x == -1)
             throw new RuntimeException(INDEX_OOB_MSG + " x=" + x);
     }
-
+/*
     public char getBoardXCoord() {
         return availableXs.charAt(x);
     }
-
+*/
     public int getBoardYCoord() {
         if (y >= 0 && y <= Board.COLUMN_SIZE - 1)
             return y + 1;
@@ -76,7 +75,7 @@ public class BoardField {
     }
 
     public String toString(){
-        return String.valueOf("" + this.getBoardXCoord() + this.getBoardYCoord());
+        return String.valueOf("" + /*this.getBoardXCoord() +*/ this.getBoardYCoord());
     }
 }
 

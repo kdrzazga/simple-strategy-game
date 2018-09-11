@@ -27,4 +27,9 @@ public class GameObject {
     public boolean isAlive() {
         return alive;
     }
+
+    public Player getSide() {
+        return side;
+    }
+
 }

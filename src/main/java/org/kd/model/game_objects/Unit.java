@@ -6,6 +6,8 @@ import org.kd.model.Player;
 
 public class Unit extends GameObject {
 
+    protected int id;
+
     public Unit(Player side, BoardField location){
         super(location);
         this.side = side;
@@ -13,4 +15,7 @@ public class Unit extends GameObject {
 
     public BoardField orderedLocation;
 
+    public int getId() {
+        return id;
+    }
 }
