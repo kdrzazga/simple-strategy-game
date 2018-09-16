@@ -1,12 +1,6 @@
 package org.kd.model;
 
-import org.kd.model.Board;
-import org.kd.model.BoardField;
-import org.kd.model.Player;
-import org.kd.model.game_objects.Archer;
-import org.kd.model.game_objects.Knight;
-import org.kd.model.game_objects.Peasant;
-import org.kd.model.game_objects.Swordsman;
+import org.kd.model.game_objects.*;
 
 import java.util.List;
 import java.util.Vector;
@@ -63,4 +57,8 @@ public class UnitsFactory {
 
         return swordsmen;
     }
+
+    /*public Unit createFromString(String unitName){
+
+    }*/
 }

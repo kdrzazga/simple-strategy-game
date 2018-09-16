@@ -30,4 +30,8 @@ public class Game {
 
         draw();
     }
+
+    public long getCurrentTurnNumber() {
+        return currentTurnNumber;
+    }
 }
