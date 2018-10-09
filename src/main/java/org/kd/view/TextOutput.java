@@ -1,8 +1,6 @@
 package org.kd.view;
 
-import org.kd.model.Board;
-import org.kd.model.Output;
-import org.kd.model.Player;
+import org.kd.model.*;
 import org.kd.model.game_objects.*;
 
 import java.io.PrintStream;
@@ -43,19 +41,51 @@ public class TextOutput implements Output {
     @Override
     public void draw(Board board) {
         print(out, ' ', 4);
-        drawHorizontalLine();
-        for (int c = 0; c < Board.ROW_SIZE; c++) {
+        drawHorizontalLine(board);
+        for (int c = 0; c < board.ROW_SIZE; c++) {
             final int col = c;
-            IntStream.range(0, Board.COLUMN_SIZE)
+            IntStream.range(0, board.COLUMN_SIZE)
                     .forEach(row -> drawBoardField(board, col, row));
             out.println('|');
             print(out, ' ', 4);
-            drawHorizontalLine();
+            drawHorizontalLine(board);
         }
     }
 
-    private void drawHorizontalLine() {
-        println(out, '-', 4 * Board.COLUMN_SIZE);
+    @Override
+    public void printHelp() {
+        out.println("Unit symbol: r - red  b - blue");
+        out.println("             P - peasant A - archer S - swordsman k - knight");
+        out.println("             number - id of a unit");
+        out.println("             rA1 - Red Archer with id=1");
+        out.println();
+        out.print("Available orders: ");
+        CommandParser.getAvailableCommands().forEach(key -> out.print(key + " "));
+        out.println();
+        out.println("Examples: move 001aa, 005ac");
+        out.println("          build bP2, barracks");
+        out.println("          build rP1, field");
+        out.println("          status bK3");
+    }
+
+    @Override
+    public void printStatus(Board board, BoardField objectLocation) {
+        GameObject object = board.getObjectAt(objectLocation);
+
+        if (object.isAlive()) {
+            out.println(object.getClass().getSimpleName());
+            out.println("Side: " + object.getSide());
+            out.println("Hit Points: " + object.hitPoints);
+            out.println("Location: " + object.location);
+        }
+    }
+
+    public void log(String message) {
+        out.println(message);
+    }
+
+    private void drawHorizontalLine(Board board) {
+        println(out, '-', 4 * board.COLUMN_SIZE);
     }
 
     private void drawBoardField(Board board, int col, int row) {

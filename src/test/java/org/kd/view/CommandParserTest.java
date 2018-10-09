@@ -18,46 +18,30 @@ public class CommandParserTest {
     public void testParsingCommand() {
         CommandParser parser = new CommandParser(moveCommand);
         parser.parse();
-        assertEquals(parser.getCommand(), "move");
+        assertEquals(parser.getCommand().toString(), "move");
 
         parser = new CommandParser(recruitCommand);
         parser.parse();
-        assertEquals(parser.getCommand(), "recruit");
+        assertEquals(parser.getCommand().toString(), "recruit");
 
         parser = new CommandParser(statusCommand);
         parser.parse();
-        assertEquals(parser.getCommand(), "status");
-    }
-
-    @Test
-    public void testParsingArgumentsSize() {
-        CommandParser parser = new CommandParser(moveCommand);
-        parser.parse();
-        assertEquals(parser.getArguments().size(), 2);
-
-        parser = new CommandParser(statusCommand);
-        parser.parse();
-        assertEquals(parser.getArguments().size(), 1);
-
-        parser = new CommandParser(endCommand);
-        parser.parse();
-        assertEquals(parser.getArguments().size(), 0);
+        assertEquals(parser.getCommand().toString(), "status");
     }
 
     @Test
     public void testParsingArguments() {
         CommandParser parser = new CommandParser(moveCommand);
         parser.parse();
-        assertTrue(parser.getArguments().contains("1a01"));
-        assertTrue(parser.getArguments().contains("2g07"));
+        assertTrue(parser.validateArguments());
 
         parser = new CommandParser(statusCommand);
         parser.parse();
-        assertTrue(parser.getArguments().contains("barracks1"));
+        assertTrue(parser.validateArguments());
     }
 
     @Test
-    public void testCommandValidation(){
+    public void testCommandValidation() {
         CommandParser parser = new CommandParser(fakeCommand);
         parser.parse();
         assertFalse(parser.validateCommand());

@@ -1,23 +1,13 @@
 package org.kd.view;
 
 import org.kd.lib.Trimmer;
+import org.kd.model.orders.Order;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 
 public class CommandParser {
-
-    private final static Map<String, Integer> commandArgumentCountMap = new Hashtable<>(5);
-
-    static {
-        commandArgumentCountMap.put("move", 2);
-        commandArgumentCountMap.put("build", 2);
-        commandArgumentCountMap.put("recruit", 2);
-        commandArgumentCountMap.put("end", 0);
-        commandArgumentCountMap.put("help", 0);
-        commandArgumentCountMap.put("status", 1);
-    }
 
     private String command;
     private List<String> arguments = new Vector<>();
@@ -34,42 +24,33 @@ public class CommandParser {
                 .orElse("");
 
         extractCommand();
-        extractAgruments();
+        extractArguments();
     }
 
-    public String getCommand() {
-        return command;
-    }
-
-    public List<String> getArguments() {
-        return arguments;
+    public Order getCommand() {
+        try {
+            return Order.valueOf(command.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return Order.NULL;
+        }
     }
 
     public boolean validateCommand() {
-        return commandArgumentCountMap.containsKey(command);
+        return getAvailableCommands()
+                .contains(command);
     }
 
     public boolean validateArguments() {
-        if (commandArgumentCountMap.get(command) != arguments.size())
-            return false;
-
-        for (String arg : arguments) {
-            try {
-                Integer.parseInt(arg);
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-        return true;
+        return getCommand().getRequiredArgumentsCount() == arguments.size();
     }
 
     static List<String> getAvailableCommands() {
-        List<String> availableCommands = new Vector<>();
-        availableCommands.addAll(commandArgumentCountMap.keySet());
-        return availableCommands;
+        return Arrays.stream(Order.values())
+                .map(Order::toString)
+                .collect(Collectors.toList());
     }
 
-    private void extractAgruments() {
+    private void extractArguments() {
         String args = line.replace(command, "").trim();
         List<String> untrimmedArgs = Arrays.asList(args.split(","));
 
@@ -80,8 +61,9 @@ public class CommandParser {
     }
 
     private void extractCommand() {
-        Pattern pattern = Pattern.compile("[a-z]*");
-        Matcher matcher = pattern.matcher(line);
-        command = (matcher.find()) ? Trimmer.trimBeginningAndEnd(matcher.group()) : "";
+        int spaceIndex = line.indexOf(" ");
+        command = spaceIndex > -1
+                ? Trimmer.trimBeginningAndEnd(line.substring(0, line.indexOf(" ")))
+                : line;
     }
 }

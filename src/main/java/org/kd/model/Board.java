@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    public final static short COLUMN_SIZE = 45;
-    public final static short ROW_SIZE = 170;
+    public final short COLUMN_SIZE = 45;
+    public final short ROW_SIZE = 170;
 
     List<Peasant> peasants = new Vector<>();
     List<Swordsman> swordsmen = new Vector<>();
@@ -18,13 +18,26 @@ public class Board {
     List<Farm> farms = new Vector<>();
     List<Barracks> barracks = new Vector<>();
 
-    public Unit getUnitAt(BoardField location) {
 
-        for (Unit unit : getAllUnits()) {
-            if (unit.location.equals(location))
-                return unit;
+    public GameObject getObjectAt(BoardField location) {
+
+        for (GameObject gameObject : getAllObjects()) {
+            if (gameObject.location.equals(location))
+                return gameObject;
         }
-        return new NullUnit(location);
+        return new NullGameObject(location);
+    }
+
+    private Iterable<? extends GameObject> getAllObjects() {
+        List<GameObject> allObjects = new Vector<>(peasants.size() + swordsmen.size() + archers.size() + knights.size() + knights.size() + farms.size() + barracks.size());
+        allObjects.addAll(peasants);
+        allObjects.addAll(swordsmen);
+        allObjects.addAll(archers);
+        allObjects.addAll(knights);
+        allObjects.addAll(farms);
+        allObjects.addAll(barracks);
+
+        return allObjects;
     }
 
     public List<Peasant> getPeasants(Player side) {
@@ -42,6 +55,7 @@ public class Board {
                 .filter(GameObject::isAlive)
                 .collect(Collectors.toList());
     }
+
     public List<Archer> getArchers(Player side) {
         return archers
                 .stream()

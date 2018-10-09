@@ -2,11 +2,10 @@ package org.kd.model.orders;
 
 import org.kd.model.game_objects.Barracks;
 
-public class OrderRecruit extends Order {
+class OrderRecruit{
 
     public Barracks barracks;
 
-    @Override
     public void execute() {
 
     }

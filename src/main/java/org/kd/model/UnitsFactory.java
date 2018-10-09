@@ -8,50 +8,51 @@ import java.util.stream.IntStream;
 
 public class UnitsFactory {
 
-    public List<Peasant> createPeasantsOnDefaultPositions(Player side, int amount, int shiftDown) {
+    public List<Peasant> createPeasantsOnDefaultPositions(Board board, Player side, int amount, int shiftDown) {
 
-        int xCoordinate = (side.equals(Player.RED)) ? 1 : Board.COLUMN_SIZE - 2;
+        int xCoordinate = (side.equals(Player.RED)) ? 1 : board.COLUMN_SIZE - 2;
 
         List<Peasant> peasants = new Vector<>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Peasant newPeasant = new Peasant(side, new BoardField(xCoordinate, y + shiftDown));
+            Peasant newPeasant = new Peasant(side, new BoardField(board, xCoordinate, y + shiftDown));
             peasants.add(newPeasant);
         });
 
         return peasants;
+//    throw new NotImplementedYetException();
     }
 
-    public List<Archer> createArchersOnDefaultPositions(Player side, int amount) {
-        int xCoordinate = (side.equals(Player.RED)) ? 2 : Board.COLUMN_SIZE - 3;
+    public List<Archer> createArchersOnDefaultPositions(Board board, Player side, int amount) {
+        int xCoordinate = (side.equals(Player.RED)) ? 2 : board.COLUMN_SIZE - 3;
         List<Archer> archers = new Vector<>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Archer newPeasant = new Archer(side, new BoardField(xCoordinate, y));
+            Archer newPeasant = new Archer(side, new BoardField(board, xCoordinate, y));
             archers.add(newPeasant);
         });
 
         return archers;
     }
 
-    public List<Knight> createKnightsOnDefaultPositions(Player side, int amount) {
-        int xCoordinate = (side.equals(Player.RED)) ? 3 : Board.COLUMN_SIZE - 4;
+    public List<Knight> createKnightsOnDefaultPositions(Board board, Player side, int amount) {
+        int xCoordinate = (side.equals(Player.RED)) ? 3 : board.COLUMN_SIZE - 4;
         List<Knight> knights = new Vector<>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Knight newPeasant = new Knight(side, new BoardField(xCoordinate, y));
+            Knight newPeasant = new Knight(side, new BoardField(board, xCoordinate, y));
             knights.add(newPeasant);
         });
 
         return knights;
     }
 
-    public List<Swordsman> createSwordsmenOnDefaultPositions(Player side, int amount) {
-        int xCoordinate = (side.equals(Player.RED)) ? 4 : Board.COLUMN_SIZE - 5;
+    public List<Swordsman> createSwordsmenOnDefaultPositions(Board board, Player side, int amount) {
+        int xCoordinate = (side.equals(Player.RED)) ? 4 : board.COLUMN_SIZE - 5;
         List<Swordsman> swordsmen = new Vector<>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Swordsman newUnit = new Swordsman(side, new BoardField(xCoordinate, y));
+            Swordsman newUnit = new Swordsman(side, new BoardField(board, xCoordinate, y));
             swordsmen.add(newUnit);
         });
 

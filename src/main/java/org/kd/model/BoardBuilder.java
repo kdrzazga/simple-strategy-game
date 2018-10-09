@@ -9,28 +9,28 @@ public class BoardBuilder {
     }
 
     public BoardBuilder createStandardBoard() {
-        board.peasants = new UnitsFactory().createPeasantsOnDefaultPositions(Player.BLUE, 1, 0);
-        board.peasants.addAll(new UnitsFactory().createPeasantsOnDefaultPositions(Player.RED, 1, 0));
+        board.peasants = new UnitsFactory().createPeasantsOnDefaultPositions(board, Player.BLUE, 1, 0);
+        board.peasants.addAll(new UnitsFactory().createPeasantsOnDefaultPositions(board, Player.RED, 1, 0));
         return this;
     }
 
     public BoardBuilder withPeasants(Player side, int amount) {
-        board.peasants.addAll(new UnitsFactory().createPeasantsOnDefaultPositions(side, amount - 1, 1));
+        board.peasants.addAll(new UnitsFactory().createPeasantsOnDefaultPositions(board, side, amount - 1, 1));
         return this;
     }
 
     public BoardBuilder withArchers(Player side, int amount) {
-        board.archers.addAll(new UnitsFactory().createArchersOnDefaultPositions(side, amount));
+        board.archers.addAll(new UnitsFactory().createArchersOnDefaultPositions(board, side, amount));
         return this;
     }
 
     public BoardBuilder withSwordsmen(Player side, int amount) {
-        board.swordsmen.addAll(new UnitsFactory().createSwordsmenOnDefaultPositions(side, amount));
+        board.swordsmen.addAll(new UnitsFactory().createSwordsmenOnDefaultPositions(board, side, amount));
         return this;
     }
 
     public BoardBuilder withKnights(Player side, int amount) {
-        board.knights.addAll(new UnitsFactory().createKnightsOnDefaultPositions(side, amount ));
+        board.knights.addAll(new UnitsFactory().createKnightsOnDefaultPositions(board, side, amount ));
         return this;
     }
 

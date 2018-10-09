@@ -1,56 +1,124 @@
+
 package org.kd.model;
+
+import org.kd.lib.exceptions.IndexOOBRuntimeException;
 
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.IntStream;
 
 public class BoardField {
 
     private int x;
     private int y;
-    public static final List<String> availableXs = new Vector<>();
+    private Board board;
 
-    private static final String INDEX_OOB_MSG = "Index out of bounds for ";
+    public static List<String> availableCoords = new Vector<>(24 * 10);
 
-    public BoardField(int tableX, int tableY){
+    static {
+        IntStream.range((int) 'a', (int) 'z')
+                .forEach(coord1 -> {
+                            for (int coord2 = 0; coord2 <= 9; coord2++)
+                                availableCoords.add("" + (char) coord1 + coord2);
+                        }
+                );
+    }
+
+    public BoardField(Board board, int tableX, int tableY) {
+        this.board = board;
         this.setTableXCoord(tableX);
         this.setTableYCoord(tableY);
     }
 
-    public BoardField(char x, int y) {
+    public BoardField(Board board, String x, String y) {
+        this.board = board;
         this.setBoardXCoord(x);
         this.setBoardYCoord(y);
     }
 
-    public BoardField(String field) {
-        this.setBoardXCoord(field.charAt(0));
-        this.setBoardYCoord(Integer.parseInt("" + field.charAt(1)));
+    public BoardField(Board board, String field) throws IllegalArgumentException {
+        this.board = board;
+        if (field.length() == 4 && field.matches("[a-z][0-9][a-z][0-9]")) {
+
+            this.setBoardXCoord(field.substring(0, 2));
+            this.setBoardYCoord(field.substring(2, 4));
+        } else throw new IllegalArgumentException();
     }
 
+    public BoardField findLowerBoardField(int translationDown) {
 
-    public void setBoardYCoord(int y) {
-        if (y >= 1 && y <= Board.COLUMN_SIZE) {
-            this.y = y - 1;
-        } else
-            throw new RuntimeException(INDEX_OOB_MSG + " y=" + y);
+        String lowerY = getBoardYCoord();
+        while (translationDown > 0 && isYWithinBoard(nextField(lowerY))) {
+            lowerY = nextField(lowerY);
+            translationDown--;
+        }
+
+        BoardField lowerField;
+
+        try {
+            lowerField = new BoardField(board, getBoardXCoord() + lowerY);
+        } catch (IllegalArgumentException e) {
+            lowerField = this;
+        }
+
+        return lowerField;
     }
 
-    public void setBoardXCoord(char x) {
-        x = ("" + x).toLowerCase().charAt(0);
-        this.x = availableXs.indexOf(x);
+    private String nextField(String field) {
+        if (field.equals("z9"))
+            return field;
 
-        if (this.x == -1)
-            throw new RuntimeException(INDEX_OOB_MSG + " x=" + x);
+        String next;
+
+        if (field.endsWith("9")) {
+            int ascii = (int) field.charAt(0);
+            ascii++;
+            next = (char) ascii + "0";
+        } else {
+            int ascii = (int) field.charAt(1);
+            ascii++;
+            next = field.charAt(0) + "" + (char) ascii + "";
+        }
+
+        return next;
     }
-/*
-    public char getBoardXCoord() {
-        return availableXs.charAt(x);
+
+    private boolean isXWithinBoard(String x) {
+        int index = availableCoords.indexOf(x);
+        return index > 0 && index < board.COLUMN_SIZE;
     }
-*/
-    public int getBoardYCoord() {
-        if (y >= 0 && y <= Board.COLUMN_SIZE - 1)
-            return y + 1;
-        else
-            throw new RuntimeException(INDEX_OOB_MSG + " y=" + y);
+
+    private boolean isYWithinBoard(String y) {
+        int index = availableCoords.indexOf(y);
+        return index > 0 && index < board.ROW_SIZE;
+    }
+
+    public void setBoardYCoord(String y) {
+        int index = availableCoords.indexOf(y);
+
+        if (index == -1 || index >= board.ROW_SIZE) {
+            throw new IndexOOBRuntimeException(y, availableCoords.get(board.ROW_SIZE - 1));
+        } else {
+            this.y = index;
+        }
+    }
+
+    public void setBoardXCoord(String x) {
+        int index = availableCoords.indexOf(x);
+
+        if (index == -1 || index >= board.COLUMN_SIZE) {
+            throw new IndexOOBRuntimeException(x, availableCoords.get(board.COLUMN_SIZE - 1));
+        } else {
+            this.x = index;
+        }
+    }
+
+    public String getBoardXCoord() {
+        return availableCoords.get(x).substring(0, 2);
+    }
+
+    public String getBoardYCoord() {
+        return availableCoords.get(y);
     }
 
     public void setTableXCoord(int value) {
@@ -74,8 +142,8 @@ public class BoardField {
                 && (field.y == this.y);
     }
 
-    public String toString(){
-        return String.valueOf("" + /*this.getBoardXCoord() +*/ this.getBoardYCoord());
+    public String toString() {
+        return this.getBoardXCoord() + this.getBoardYCoord();
     }
 }
 

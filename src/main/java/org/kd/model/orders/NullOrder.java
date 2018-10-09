@@ -1,9 +1,8 @@
 package org.kd.model.orders;
 
-public class NullOrder extends Order {
+public class NullOrder {
 
     public NullOrder(){
-        totalDuration = 0;
-        currentDuration = 0;
+
     }
 }
