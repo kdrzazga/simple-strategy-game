@@ -18,11 +18,11 @@ public class TextInput implements Input {
     @Override
     public Order readOrder() {
 
-        Scanner scanner = new Scanner(in);
+        var scanner = new Scanner(in);
         String orderText;
         orderText = scanner.nextLine();
-        parser = new CommandParser(orderText);
-        parser.parse();
+        parser = new CommandParser();
+        parser.parse(orderText);
 
         return parser.getCommand();
     }

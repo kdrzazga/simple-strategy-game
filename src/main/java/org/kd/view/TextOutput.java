@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static org.kd.lib.Sout.println;
-import static org.kd.lib.Sout.print;
-
 public class TextOutput implements Output {
 
     private final PrintStream out;
@@ -40,14 +37,15 @@ public class TextOutput implements Output {
 
     @Override
     public void draw(Board board) {
-        print(out, ' ', 4);
+        out.print(" ".repeat(4));
         drawHorizontalLine(board);
+
         for (int c = 0; c < board.ROW_SIZE; c++) {
             final int col = c;
             IntStream.range(0, board.COLUMN_SIZE)
                     .forEach(row -> drawBoardField(board, col, row));
             out.println('|');
-            print(out, ' ', 4);
+            out.print(" ".repeat(4));
             drawHorizontalLine(board);
         }
     }
@@ -84,8 +82,13 @@ public class TextOutput implements Output {
         out.println(message);
     }
 
+    @Override
+    public void printError() {
+        out.println(TextOutputColors.RED_COLOR + "Wrong command" + TextOutputColors.END_COLOUR);
+    }
+
     private void drawHorizontalLine(Board board) {
-        println(out, '-', 4 * board.COLUMN_SIZE);
+        out.println(String.valueOf('-').repeat(4 * board.COLUMN_SIZE));
     }
 
     private void drawBoardField(Board board, int col, int row) {

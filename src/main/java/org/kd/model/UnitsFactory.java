@@ -12,7 +12,7 @@ public class UnitsFactory {
 
         int xCoordinate = (side.equals(Player.RED)) ? 1 : board.COLUMN_SIZE - 2;
 
-        List<Peasant> peasants = new Vector<>(amount);
+        var peasants = new Vector<Peasant>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
             Peasant newPeasant = new Peasant(side, new BoardField(board, xCoordinate, y + shiftDown));
@@ -25,11 +25,11 @@ public class UnitsFactory {
 
     public List<Archer> createArchersOnDefaultPositions(Board board, Player side, int amount) {
         int xCoordinate = (side.equals(Player.RED)) ? 2 : board.COLUMN_SIZE - 3;
-        List<Archer> archers = new Vector<>(amount);
+        var archers = new Vector<Archer>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Archer newPeasant = new Archer(side, new BoardField(board, xCoordinate, y));
-            archers.add(newPeasant);
+            var newArcher = new Archer(side, new BoardField(board, xCoordinate, y));
+            archers.add(newArcher);
         });
 
         return archers;
@@ -37,11 +37,11 @@ public class UnitsFactory {
 
     public List<Knight> createKnightsOnDefaultPositions(Board board, Player side, int amount) {
         int xCoordinate = (side.equals(Player.RED)) ? 3 : board.COLUMN_SIZE - 4;
-        List<Knight> knights = new Vector<>(amount);
+        var knights = new Vector<Knight>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Knight newPeasant = new Knight(side, new BoardField(board, xCoordinate, y));
-            knights.add(newPeasant);
+            var newKnight = new Knight(side, new BoardField(board, xCoordinate, y));
+            knights.add(newKnight);
         });
 
         return knights;
@@ -49,10 +49,10 @@ public class UnitsFactory {
 
     public List<Swordsman> createSwordsmenOnDefaultPositions(Board board, Player side, int amount) {
         int xCoordinate = (side.equals(Player.RED)) ? 4 : board.COLUMN_SIZE - 5;
-        List<Swordsman> swordsmen = new Vector<>(amount);
+        var swordsmen = new Vector<Swordsman>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Swordsman newUnit = new Swordsman(side, new BoardField(board, xCoordinate, y));
+            var newUnit = new Swordsman(side, new BoardField(board, xCoordinate, y));
             swordsmen.add(newUnit);
         });
 

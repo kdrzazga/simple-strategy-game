@@ -8,4 +8,7 @@ public interface Output {
 
     void printStatus(Board board, BoardField objectLocation);
 
-    void log(String message);}
+    void log(String message);
+
+    void printError();
+}

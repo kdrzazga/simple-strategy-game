@@ -14,7 +14,6 @@ public class TextCommandExecutor implements CommandExecutor {
     private final Output output;
     private Game game;
     private CommandParser parser;
-    private Order order;
 
     public TextCommandExecutor(Game game, Output output) {
         this.game = game;
@@ -22,8 +21,8 @@ public class TextCommandExecutor implements CommandExecutor {
     }
 
     public void execute(Order order) {
-        parser = new CommandParser(order.toString());
-        parser.parse();
+        parser = new CommandParser();
+        parser.parse(order.toString());
 
         if (!parser.validateCommand()) {
             output.log(TextOutputColors.RED_COLOR + "Wrong command" + TextOutputColors.END_COLOUR);
@@ -56,6 +55,11 @@ public class TextCommandExecutor implements CommandExecutor {
             case STATUS:
                 executeStatus(order.getArguments());
                 break;
+            case EXIT:
+                output.log(TextOutputColors.BLUE_COLOR + "Good bye!" + TextOutputColors.BLUE_COLOR);//will exit in outer loop
+                break;
+            default:
+                output.printError();
         }
     }
 
@@ -77,8 +81,8 @@ public class TextCommandExecutor implements CommandExecutor {
     }
 
     private void executeStatus(List<String> arguments) {
-       // BoardField location = new BoardField(arguments.get(0));
-       // output.printStatus(this.game.board, location);
+        // BoardField location = new BoardField(arguments.get(0));
+        // output.printStatus(this.game.board, location);
     }
 
     public Game getGame() {

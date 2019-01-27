@@ -16,38 +16,34 @@ public class CommandParserTest {
 
     @Test
     public void testParsingCommand() {
-        CommandParser parser = new CommandParser(moveCommand);
-        parser.parse();
+        CommandParser parser = new CommandParser();
+        parser.parse(moveCommand);
         assertEquals(parser.getCommand().toString(), "move");
 
-        parser = new CommandParser(recruitCommand);
-        parser.parse();
+        parser.parse(recruitCommand);
         assertEquals(parser.getCommand().toString(), "recruit");
 
-        parser = new CommandParser(statusCommand);
-        parser.parse();
+        parser.parse(statusCommand);
         assertEquals(parser.getCommand().toString(), "status");
     }
 
     @Test
     public void testParsingArguments() {
-        CommandParser parser = new CommandParser(moveCommand);
-        parser.parse();
+        CommandParser parser = new CommandParser();
+        parser.parse(moveCommand);
         assertTrue(parser.validateArguments());
 
-        parser = new CommandParser(statusCommand);
-        parser.parse();
+        parser.parse(statusCommand);
         assertTrue(parser.validateArguments());
     }
 
     @Test
     public void testCommandValidation() {
-        CommandParser parser = new CommandParser(fakeCommand);
-        parser.parse();
+        CommandParser parser = new CommandParser();
+        parser.parse(fakeCommand);
         assertFalse(parser.validateCommand());
 
-        parser = new CommandParser(recruitCommand);
-        parser.parse();
+        parser.parse(recruitCommand);
         assertTrue(parser.validateCommand());
     }
 }

@@ -2,6 +2,8 @@ package org.kd.model;
 
 import org.kd.model.game_objects.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -11,12 +13,12 @@ public class Board {
     public final short COLUMN_SIZE = 45;
     public final short ROW_SIZE = 170;
 
-    List<Peasant> peasants = new Vector<>();
-    List<Swordsman> swordsmen = new Vector<>();
-    List<Archer> archers = new Vector<>();
-    List<Knight> knights = new Vector<>();
-    List<Farm> farms = new Vector<>();
-    List<Barracks> barracks = new Vector<>();
+    List<Peasant> peasants = new LinkedList<>();
+    List<Swordsman> swordsmen = new LinkedList<>();
+    List<Archer> archers = new LinkedList<>();
+    List<Knight> knights = new LinkedList<>();
+    List<Farm> farms = new LinkedList<>();
+    List<Barracks> barracks = new LinkedList<>();
 
 
     public GameObject getObjectAt(BoardField location) {
@@ -29,7 +31,7 @@ public class Board {
     }
 
     private Iterable<? extends GameObject> getAllObjects() {
-        List<GameObject> allObjects = new Vector<>(peasants.size() + swordsmen.size() + archers.size() + knights.size() + knights.size() + farms.size() + barracks.size());
+        List<GameObject> allObjects = new ArrayList<>(peasants.size() + swordsmen.size() + archers.size() + knights.size() + knights.size() + farms.size() + barracks.size());
         allObjects.addAll(peasants);
         allObjects.addAll(swordsmen);
         allObjects.addAll(archers);
@@ -95,7 +97,7 @@ public class Board {
     }
 
     public List<Unit> getAllUnits(Player side) {
-        List<Unit> allUnitsOf1Player = new Vector<>();
+        List<Unit> allUnitsOf1Player = new LinkedList<>();
         allUnitsOf1Player.addAll(getPeasants(side));
         allUnitsOf1Player.addAll(getArchers(side));
         allUnitsOf1Player.addAll(getSwordsmen(side));

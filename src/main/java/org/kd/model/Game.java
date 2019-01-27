@@ -37,14 +37,14 @@ public class Game {
 
         draw();
 
-        Order order = Order.END;
+        var order = Order.END;
         while (!order.equals(Order.EXIT)){
 
             order = input.readOrder();
             commandExecutor.execute(order);
         }
 
-        output.log("Good bye !");
+
         System.exit(0);
     }
 

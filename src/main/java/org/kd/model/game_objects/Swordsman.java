@@ -14,7 +14,6 @@ public class Swordsman extends MilitaryUnit  {
         this.range = 1;
         this.attackStrength = 4;
 
-
         if (side.equals(Player.RED)) {
             id = redSwordsmenAmount;
             redSwordsmenAmount++;

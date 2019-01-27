@@ -1,28 +1,27 @@
 package org.kd.model.orders;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public enum Order {
 
     BUILD, MOVE, RECRUIT, END, HELP, STATUS, EXIT, NULL;
 
-    private List<String> arguments;
+    private List<String> arguments = new Vector<>();
     protected byte totalDuration;
     protected byte currentDuration;
 
-    private final static Map<Order, Integer> orderArgumentsCountMap = new Hashtable<>(6);
-
-    static {
-        orderArgumentsCountMap.put(MOVE, 2);
-        orderArgumentsCountMap.put(BUILD, 2);
-        orderArgumentsCountMap.put(RECRUIT, 2);
-        orderArgumentsCountMap.put(END, 0);
-        orderArgumentsCountMap.put(HELP, 0);
-        orderArgumentsCountMap.put(STATUS, 1);
-        orderArgumentsCountMap.put(EXIT, 0);
-    }
+    private final static Map<Order, Integer> orderArgumentsCountMap = Map.of(
+            MOVE, 2,
+            BUILD, 2,
+            RECRUIT, 2,
+            END, 0,
+            HELP, 0,
+            STATUS, 1,
+            EXIT, 0,
+            NULL, 0);
 
     void execute() {
     }
@@ -47,7 +46,7 @@ public enum Order {
         return this.name().toLowerCase();
     }
 
-    public int getRequiredArgumentsCount(){
+    public int getRequiredArgumentsCount() {
         return orderArgumentsCountMap.get(this);
     }
 }

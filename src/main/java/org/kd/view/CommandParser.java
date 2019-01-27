@@ -3,28 +3,27 @@ package org.kd.view;
 import org.kd.lib.Trimmer;
 import org.kd.model.orders.Order;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Vector;
 import java.util.stream.Collectors;
-
 
 public class CommandParser {
 
     private String command;
     private List<String> arguments = new Vector<>();
-    private String line;
 
-    public CommandParser(String line) {
-        this.line = Trimmer.trimBeginningAndEnd(line);
-    }
+    public void parse(String line) {
 
-    public void parse() {
+        line = Trimmer.trimBeginningAndEnd(line);
 
         line = Optional.ofNullable(line)
                 .map(String::toLowerCase)
                 .orElse("");
 
-        extractCommand();
-        extractArguments();
+        command = extractCommand(line);
+        arguments = extractArguments(line);
     }
 
     public Order getCommand() {
@@ -50,20 +49,23 @@ public class CommandParser {
                 .collect(Collectors.toList());
     }
 
-    private void extractArguments() {
-        String args = line.replace(command, "").trim();
-        List<String> untrimmedArgs = Arrays.asList(args.split(","));
+    private List<String> extractArguments(String line) {
+        var args = line.replace(extractCommand(line), "").trim();
+        var untrimmedArgs = Arrays.asList(args.split(","));
+        var extracedArguments = new Vector<String>();
 
         untrimmedArgs
                 .stream()
                 .filter(arg -> arg.length() > 0)
-                .forEach(untrimmedArg -> arguments.add(Trimmer.trimBeginningAndEnd(untrimmedArg)));
+                .forEach(untrimmedArg -> extracedArguments.add(Trimmer.trimBeginningAndEnd(untrimmedArg)));
+
+        return extracedArguments;
     }
 
-    private void extractCommand() {
+    private String extractCommand(String line) {
         int spaceIndex = line.indexOf(" ");
-        command = spaceIndex > -1
-                ? Trimmer.trimBeginningAndEnd(line.substring(0, line.indexOf(" ")))
+         return spaceIndex > -1
+                ? Trimmer.trimBeginningAndEnd(line.substring(0, spaceIndex))
                 : line;
     }
 }
