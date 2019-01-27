@@ -43,8 +43,6 @@ public class Game {
             order = input.readOrder();
             commandExecutor.execute(order);
         }
-
-
         System.exit(0);
     }
 
@@ -58,5 +56,9 @@ public class Game {
 
     public Output getOutput() {
         return output;
+    }
+
+    public void setOutput(Output output) {
+        this.output = output;
     }
 }

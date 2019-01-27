@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 public class TextOutput implements Output {
 
-    private final PrintStream out;
+    private PrintStream out;
     private static final Map<Class<? extends Unit>, Character> unitSymbolMap = new Hashtable<>();
     private static final Map<Player, String> playerSymbolMap = new Hashtable<>();
     private static final Map<Player, String> playerColorMap = new Hashtable<>();
@@ -33,6 +33,10 @@ public class TextOutput implements Output {
 
     public TextOutput() {
         out = System.out;
+    }
+
+    public TextOutput(PrintStream out){
+        this.out = out;
     }
 
     @Override
@@ -116,5 +120,13 @@ public class TextOutput implements Output {
                 + unitSymbolMap.get(unit.getClass())
                 + unit.getId()
                 + TextOutputColors.END_COLOUR;
+    }
+
+    public PrintStream getOut() {
+        return out;
+    }
+
+    public void setOut(PrintStream out) {
+        this.out = out;
     }
 }

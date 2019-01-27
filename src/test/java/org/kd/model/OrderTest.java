@@ -1,9 +1,9 @@
 package org.kd.model;
 
+import org.junit.Test;
 import org.kd.model.orders.Order;
-import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class OrderTest {
 

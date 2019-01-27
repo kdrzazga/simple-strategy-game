@@ -6,9 +6,11 @@ import org.kd.model.orders.Order;
 import java.io.InputStream;
 import java.util.Scanner;
 
+
 public class TextInput implements Input {
 
     protected InputStream in;
+
     private CommandParser parser;
 
     public TextInput() {
