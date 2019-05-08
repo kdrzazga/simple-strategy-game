@@ -7,6 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static java.lang.Integer.max;
+import static java.lang.Integer.min;
 
 public class Board {
 
@@ -28,6 +32,10 @@ public class Board {
                 return gameObject;
         }
         return new NullGameObject(location);
+    }
+
+    public GameObject getObjectAt(int x, int y) {
+        return getObjectAt(new BoardField(this,  x, y));
     }
 
     private Iterable<? extends GameObject> getAllObjects() {
@@ -107,6 +115,44 @@ public class Board {
                 .stream()
                 .filter(GameObject::isAlive)
                 .collect(Collectors.toList());
+    }
+
+    public boolean contains(BoardField boardField) {
+        return boardField.getTableXCoord() < ROW_SIZE
+                && boardField.getTableYCoord() < COLUMN_SIZE;
+    }
+
+
+    private boolean findObstaclesInSlashMove(int xSrc, int xDst, String DEBUG_MOVE_MSG, int y) {
+        for (int x = min(xSrc, xDst) + 1; x < max(xSrc, xDst); x++) {
+            if (getObjectAt(x, y).isAlive()) {
+                return true;
+            }
+            y++;
+        }
+        return false;
+    }
+
+    private boolean findObstaclesInBackslashMove(int xSrc, int xDst, String DEBUG_MOVE_MSG, int y) {
+        for (int x = min(xSrc, xDst) + 1; x < max(xSrc, xDst); x++) {
+
+            if (getObjectAt(x, y).isAlive()) {
+
+
+                return true;
+            }
+            y--;
+        }
+        return false;
+    }
+    private boolean findObstaclesInHorizontalMove(int xSrc, int ySrc, int yDst) {
+        return IntStream.range(min(ySrc, yDst) + 1, max(ySrc, yDst))
+                .anyMatch(y -> getObjectAt(xSrc, y).isAlive());
+    }
+
+    private boolean findObstaclesInVerticalMove(int xSrc, int ySrc, int xDst) {
+        return IntStream.range(min(xSrc, xDst) + 1, max(xSrc, xDst))
+                .anyMatch(x -> getObjectAt(x, ySrc).isAlive());
     }
 
 }

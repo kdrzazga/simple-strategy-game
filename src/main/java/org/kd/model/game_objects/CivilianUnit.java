@@ -5,7 +5,7 @@ import org.kd.model.Player;
 
 public class CivilianUnit extends Unit{
 
-    public CivilianUnit(Player side, BoardField location){
-        super(side, location);
+    public CivilianUnit(Player side, VelocityVector v){
+        super(side, v);
     }
 }

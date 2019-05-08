@@ -65,12 +65,13 @@ public class TextCommandExecutor implements CommandExecutor {
 
     private void executeEnd() {
         game.nextTurn();
+        output.log("Turn: " + game.getCurrentTurnNumber() + "\n");
     }
 
 
     private void executeMove(List<String> arguments) {
         Unit unit;
-        BoardField destination;// = new BoardField(arguments.get(1));
+        BoardField destination = new BoardField(game.board, arguments.get(1));
         //order = new OrderMove(unit, destination);
     }
 

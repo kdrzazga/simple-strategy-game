@@ -8,8 +8,8 @@ public class Swordsman extends MilitaryUnit  {
     private static int redSwordsmenAmount = 0;
     private static int blueSwordsmenAmount = 0;
 
-    public Swordsman(Player side, BoardField location){
-        super(side, location);
+    public Swordsman(Player side, VelocityVector v){
+        super(side, v);
         this.hitPoints = 12;
         this.range = 1;
         this.attackStrength = 4;

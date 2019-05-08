@@ -46,6 +46,8 @@ public class Game {
         System.exit(0);
     }
 
+
+
     public long getCurrentTurnNumber() {
         return currentTurnNumber;
     }

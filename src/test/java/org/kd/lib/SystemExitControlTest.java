@@ -1,6 +1,7 @@
 package org.kd.lib;
 
 import org.junit.Test;
+import org.kd.lib.exceptions.ExitTrappedException;
 
 public class SystemExitControlTest {
 
@@ -11,7 +12,7 @@ public class SystemExitControlTest {
         try {
             System.out.println("Running a program which calls System.exit");
             System.exit(0);
-        } catch (SystemExitControl.ExitTrappedException e) {
+        } catch (ExitTrappedException e) {
             System.out.println("Forbidding call to System.exit");
         }
 

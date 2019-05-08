@@ -15,12 +15,12 @@ public class UnitsFactory {
         var peasants = new Vector<Peasant>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            Peasant newPeasant = new Peasant(side, new BoardField(board, xCoordinate, y + shiftDown));
+
+            Peasant newPeasant = new Peasant(side, velocity(board, xCoordinate, y + shiftDown));
             peasants.add(newPeasant);
         });
 
         return peasants;
-//    throw new NotImplementedYetException();
     }
 
     public List<Archer> createArchersOnDefaultPositions(Board board, Player side, int amount) {
@@ -28,7 +28,7 @@ public class UnitsFactory {
         var archers = new Vector<Archer>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            var newArcher = new Archer(side, new BoardField(board, xCoordinate, y));
+            var newArcher = new Archer(side, velocity(board, xCoordinate, y));
             archers.add(newArcher);
         });
 
@@ -40,7 +40,7 @@ public class UnitsFactory {
         var knights = new Vector<Knight>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            var newKnight = new Knight(side, new BoardField(board, xCoordinate, y));
+            var newKnight = new Knight(side, velocity(board, xCoordinate, y));
             knights.add(newKnight);
         });
 
@@ -52,14 +52,14 @@ public class UnitsFactory {
         var swordsmen = new Vector<Swordsman>(amount);
 
         IntStream.range(0, amount).forEach(y -> {
-            var newUnit = new Swordsman(side, new BoardField(board, xCoordinate, y));
+            var newUnit = new Swordsman(side, velocity(board, xCoordinate, y));
             swordsmen.add(newUnit);
         });
 
         return swordsmen;
     }
 
-    /*public Unit createFromString(String unitName){
-
-    }*/
+    private VelocityVector velocity(Board board, int x, int y){
+        return new VelocityVector(0, 0, new BoardField(board, x, y));
+    }
 }

@@ -8,8 +8,8 @@ public class Archer extends MilitaryUnit  {
     private static int redArchersAmount;
     private static int blueArchersAmount;
 
-    public Archer(Player side, BoardField location){
-        super(side, location);
+    public Archer(Player side, VelocityVector v){
+        super(side, v);
         this.hitPoints = 10;
         this.attackStrength = 2;
         this.range = 4;

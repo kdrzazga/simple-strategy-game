@@ -8,8 +8,8 @@ public class Peasant extends CivilianUnit {
     private static int redPeasantsAmount = 0;
     private static int bluePeasantsAmount = 0;
 
-    public Peasant(Player side, BoardField location){
-        super(side, location);
+    public Peasant(Player side, VelocityVector v){
+        super(side, v);
         this.hitPoints = 4;
 
         if (side.equals(Player.RED)) {

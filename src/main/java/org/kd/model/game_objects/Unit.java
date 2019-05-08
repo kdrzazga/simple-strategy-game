@@ -7,9 +7,11 @@ import org.kd.model.Player;
 public class Unit extends GameObject {
 
     protected int id;
+    protected VelocityVector velocity;
 
-    public Unit(Player side, BoardField location){
-        super(location);
+    public Unit(Player side, VelocityVector velocity){
+        super(velocity.position);
+        this.velocity = velocity;
         this.side = side;
     }
 

@@ -16,14 +16,12 @@ public class CommandParser {
 
     public void parse(String line) {
 
-        line = Trimmer.trimBeginningAndEnd(line);
-
-        line = Optional.ofNullable(line)
+        var formattedLine = Optional.ofNullable(Trimmer.trimBeginningAndEnd(line))
                 .map(String::toLowerCase)
                 .orElse("");
 
-        command = extractCommand(line);
-        arguments = extractArguments(line);
+        command = extractCommand(formattedLine);
+        arguments = extractArguments(formattedLine);
     }
 
     public Order getCommand() {

@@ -7,7 +7,7 @@ import org.kd.view.TextOutput;
 public class TurnBasedGame {
 
     public static void main(String[] args) {
-        Game game = new Game(new TextInput(),  new TextOutput());
+        var game = new Game(new TextInput(),  new TextOutput());
 
         game.start();
     }

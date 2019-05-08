@@ -1,14 +1,13 @@
 package org.kd.lib;
 
+import org.kd.lib.exceptions.ExitTrappedException;
+
 import java.security.Permission;
 
 public class SystemExitControl {
 
-    public static class ExitTrappedException extends SecurityException {
-    }
-
     public static void forbidSystemExitCall() {
-        final SecurityManager securityManager = new SecurityManager() {
+        final var securityManager = new SecurityManager() {
             @Override
             public void checkPermission(Permission permission) {
                 if (permission.getName().contains("exitVM")) {

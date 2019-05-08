@@ -8,8 +8,8 @@ public class MilitaryUnit extends Unit {
     protected int range;
     protected int attackStrength;
 
-    public MilitaryUnit(Player side, BoardField location) {
-        super(side, location);
+    public MilitaryUnit(Player side, VelocityVector velocity) {
+        super(side, velocity);
     }
 
     public void attack(){
