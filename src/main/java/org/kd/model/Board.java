@@ -5,7 +5,6 @@ import org.kd.model.game_objects.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,7 +34,7 @@ public class Board {
     }
 
     public GameObject getObjectAt(int x, int y) {
-        return getObjectAt(new BoardField(this,  x, y));
+        return getObjectAt(new BoardField(x, y, this.ROW_SIZE, this.COLUMN_SIZE));
     }
 
     private Iterable<? extends GameObject> getAllObjects() {

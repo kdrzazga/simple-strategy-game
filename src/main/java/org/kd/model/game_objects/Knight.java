@@ -1,6 +1,5 @@
 package org.kd.model.game_objects;
 
-import org.kd.model.BoardField;
 import org.kd.model.Player;
 
 public class Knight extends MilitaryUnit {

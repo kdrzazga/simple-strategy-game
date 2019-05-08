@@ -2,7 +2,10 @@ package org.kd.view;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.kd.lib.exceptions.ExitTrappedException;
+import org.kd.model.Board;
+import org.kd.model.config.Config;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -14,11 +17,18 @@ import static org.mockito.Mockito.when;
 import org.kd.lib.SystemExitControl;
 import org.kd.model.Game;
 import org.kd.model.orders.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@Import(Config.class)
 public class TextCommandExecutorTest {
 
     @Mock
     private TextInput fakeTextInput;
+
+    private Board board;
 
     private final ByteArrayOutputStream newSystemOutputByteArray = new ByteArrayOutputStream();
     private final PrintStream oldSystemOutput = System.out;
@@ -70,7 +80,9 @@ public class TextCommandExecutorTest {
     }
 
     private void executeActionsInGame() {
-        var game = new Game(fakeTextInput, new TextOutput());
+        var output = new Config().output();// I don't know why test fails, when output is injected, so it needs to be created
+        var game = new Game(board, fakeTextInput, output);
+        game.setCommandExecutor(new TextCommandExecutor(game, output));
 
         when(fakeTextInput.readOrder())
                 .thenReturn(Order.END)
@@ -80,5 +92,10 @@ public class TextCommandExecutorTest {
                 .thenReturn(Order.EXIT);
 
         game.start();
+    }
+
+    @Autowired
+    public void setBoard(Board board) {
+        this.board = board;
     }
 }

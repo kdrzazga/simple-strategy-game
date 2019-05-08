@@ -11,7 +11,8 @@ public class BoardField {
 
     private int x;
     private int y;
-    private Board board;
+    private final int maxX;
+    private final int maxY;
 
     public static List<String> availableCoords = new Vector<>(24 * 10);
 
@@ -24,20 +25,23 @@ public class BoardField {
                 );
     }
 
-    public BoardField(Board board, int tableX, int tableY) {
-        this.board = board;
+    public BoardField(int tableX, int tableY, int maxX, int maxY) {
+        this.maxX = maxX;
+        this.maxY = maxY;
         this.setTableXCoord(tableX);
         this.setTableYCoord(tableY);
     }
 
-    public BoardField(Board board, String x, String y) {
-        this.board = board;
+    public BoardField(String x, String y) {
+        this.maxX = 10;
+        this.maxY = 10;
         this.setBoardXCoord(x);
         this.setBoardYCoord(y);
     }
 
-    public BoardField(Board board, String field) throws IllegalArgumentException {
-        this.board = board;
+    public BoardField(int maxX, int maxY, String field) throws IllegalArgumentException {
+        this.maxX = maxX;
+        this.maxY = maxY;
         if (field.length() == 4 && field.matches("[a-z][0-9][a-z][0-9]")) {
 
             this.setBoardXCoord(field.substring(0, 2));
@@ -56,7 +60,7 @@ public class BoardField {
         BoardField lowerField;
 
         try {
-            lowerField = new BoardField(board, getBoardXCoord() + lowerY);
+            lowerField = new BoardField(maxX, maxY, getBoardXCoord() + lowerY);
         } catch (IllegalArgumentException e) {
             lowerField = this;
         }
@@ -85,19 +89,19 @@ public class BoardField {
 
     private boolean isXWithinBoard(String x) {
         int index = availableCoords.indexOf(x);
-        return index > 0 && index < board.COLUMN_SIZE;
+        return index > 0 && index < maxY;
     }
 
     private boolean isYWithinBoard(String y) {
         int index = availableCoords.indexOf(y);
-        return index > 0 && index < board.ROW_SIZE;
+        return index > 0 && index < maxX;
     }
 
     public void setBoardYCoord(String y) {
         int index = availableCoords.indexOf(y);
 
-        if (index == -1 || index >= board.ROW_SIZE) {
-            throw new IndexOOBRuntimeException(y, availableCoords.get(board.ROW_SIZE - 1));
+        if (index == -1 || index >= maxX) {
+            throw new IndexOOBRuntimeException(y, availableCoords.get(maxX - 1));
         } else {
             this.y = index;
         }
@@ -106,8 +110,8 @@ public class BoardField {
     public void setBoardXCoord(String x) {
         int index = availableCoords.indexOf(x);
 
-        if (index == -1 || index >= board.COLUMN_SIZE) {
-            throw new IndexOOBRuntimeException(x, availableCoords.get(board.COLUMN_SIZE - 1));
+        if (index == -1 || index >= maxY) {
+            throw new IndexOOBRuntimeException(x, availableCoords.get(maxY - 1));
         } else {
             this.x = index;
         }

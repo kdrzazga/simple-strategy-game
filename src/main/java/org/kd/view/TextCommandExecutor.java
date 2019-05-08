@@ -13,7 +13,6 @@ public class TextCommandExecutor implements CommandExecutor {
 
     private final Output output;
     private Game game;
-    private CommandParser parser;
 
     public TextCommandExecutor(Game game, Output output) {
         this.game = game;
@@ -21,7 +20,7 @@ public class TextCommandExecutor implements CommandExecutor {
     }
 
     public void execute(Order order) {
-        parser = new CommandParser();
+        CommandParser parser = new CommandParser();
         parser.parse(order.toString());
 
         if (!parser.validateCommand()) {
@@ -71,17 +70,21 @@ public class TextCommandExecutor implements CommandExecutor {
 
     private void executeMove(List<String> arguments) {
         Unit unit;
-        BoardField destination = new BoardField(game.board, arguments.get(1));
+        BoardField destination = new BoardField(game.board.ROW_SIZE, game.board.COLUMN_SIZE, arguments.get(1));
         //order = new OrderMove(unit, destination);
     }
 
     private void executeBuild(List<String> arguments) {
+        //TODO: implement
     }
 
     private void executeRecruit(List<String> arguments) {
+        //TODO: implement
     }
 
     private void executeStatus(List<String> arguments) {
+        //TODO: implement
+
         // BoardField location = new BoardField(arguments.get(0));
         // output.printStatus(this.game.board, location);
     }
@@ -89,4 +92,5 @@ public class TextCommandExecutor implements CommandExecutor {
     public Game getGame() {
         return game;
     }
+
 }

@@ -2,12 +2,22 @@ package org.kd.view;
 
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.kd.model.config.Config;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@Import(Config.class)
 public class CommandParserTest {
+
+    @Autowired
+    private CommandParser parser;// = new CommandParser();
 
     private final String moveCommand = "move 1a01, 2g07";
     private final String recruitCommand = "recruit barracks1, archer";
@@ -17,7 +27,7 @@ public class CommandParserTest {
 
     @Test
     public void testParsingCommand() {
-        CommandParser parser = new CommandParser();
+
         parser.parse(moveCommand);
         assertEquals(parser.getCommand().toString(), "move");
 
@@ -30,7 +40,7 @@ public class CommandParserTest {
 
     @Test
     public void testParsingArguments() {
-        CommandParser parser = new CommandParser();
+
         parser.parse(moveCommand);
         assertTrue(parser.validateArguments());
 
@@ -40,7 +50,6 @@ public class CommandParserTest {
 
     @Test
     public void testCommandValidation() {
-        CommandParser parser = new CommandParser();
         parser.parse(fakeCommand);
         assertFalse(parser.validateCommand());
 

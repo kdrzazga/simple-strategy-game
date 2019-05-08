@@ -3,7 +3,6 @@ package org.kd.model.orders;
 import org.kd.model.Board;
 import org.kd.model.BoardField;
 import org.kd.model.game_objects.NullGameObject;
-import org.kd.model.game_objects.Unit;
 
 public class OrderMove {
 

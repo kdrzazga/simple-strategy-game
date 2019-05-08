@@ -1,14 +1,14 @@
 package org.kd;
 
 import org.kd.model.Game;
-import org.kd.view.TextInput;
-import org.kd.view.TextOutput;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class TurnBasedGame {
 
     public static void main(String[] args) {
-        var game = new Game(new TextInput(),  new TextOutput());
+         SpringApplication.run(TurnBasedGame.class).getBean(Game.class).start();
 
-        game.start();
     }
 }

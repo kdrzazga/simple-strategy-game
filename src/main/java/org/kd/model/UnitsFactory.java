@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
+//@Import(Config.class)
 public class UnitsFactory {
+
+    /*@Autowired
+    private Board board;*/
+
 
     public List<Peasant> createPeasantsOnDefaultPositions(Board board, Player side, int amount, int shiftDown) {
 
@@ -60,6 +65,6 @@ public class UnitsFactory {
     }
 
     private VelocityVector velocity(Board board, int x, int y){
-        return new VelocityVector(0, 0, new BoardField(board, x, y));
+        return new VelocityVector(0, 0, new BoardField(x, y, board.ROW_SIZE, board.COLUMN_SIZE));
     }
 }

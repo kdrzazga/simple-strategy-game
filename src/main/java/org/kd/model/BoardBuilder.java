@@ -1,8 +1,13 @@
 package org.kd.model;
 
+import org.kd.model.config.Config;
+import org.springframework.context.annotation.Import;
+
+@Import(Config.class)
 public class BoardBuilder {
 
-    private static Board board;
+    //@Autowired
+    private Board board;
 
     public BoardBuilder() {
         board = new Board();
